@@ -1,6 +1,147 @@
 {
-    "version": 0,
+    "version": 1,
     "name": "PlayerControls",
-    "maps": [],
-    "controlSchemes": []
+    "maps": [
+        {
+            "name": "Players",
+            "id": "26316f4a-69b2-4e2b-a00c-527c0c20ae09",
+            "actions": [
+                {
+                    "name": "P1 Pivot",
+                    "type": "Button",
+                    "id": "c38a226d-b43f-4393-9c2b-d99f599a0116",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "P1 Stab",
+                    "type": "Button",
+                    "id": "bbb21898-6335-4ca6-a8d6-67a129544789",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "P1 Swing",
+                    "type": "Button",
+                    "id": "99256bd7-62a6-41cf-8d09-8307ee263b1e",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "P2 Pivot",
+                    "type": "Button",
+                    "id": "93fe8bc7-da7a-4c61-997d-dfdf21538e2b",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "P2 Stab",
+                    "type": "Button",
+                    "id": "80b23b54-1b0e-4582-9853-405414ba2b56",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "P2 Swing",
+                    "type": "Button",
+                    "id": "09f4d578-5d64-436d-bba9-9556c18cd663",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "e55a6135-5b2f-48ff-b57e-01edbe3ef650",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyobard",
+                    "action": "P1 Pivot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5e467503-41d0-49d7-bc61-ba6cc6577578",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyobard",
+                    "action": "P1 Stab",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5db03261-3599-402b-9765-a6e9a1a42bdf",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyobard",
+                    "action": "P1 Swing",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b79f1bc7-502f-4a1f-9cc0-73dfd8804ab6",
+                    "path": "<Keyboard>/i",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyobard",
+                    "action": "P2 Pivot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "838f7a94-6caa-423a-ba3e-503fd85742e2",
+                    "path": "<Keyboard>/o",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyobard",
+                    "action": "P2 Stab",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "387f8ce5-2ab9-43c4-9701-061d67f77dbc",
+                    "path": "<Keyboard>/p",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyobard",
+                    "action": "P2 Swing",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "Keyobard",
+            "bindingGroup": "Keyobard",
+            "devices": [
+                {
+                    "devicePath": "<Keyboard>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
 }

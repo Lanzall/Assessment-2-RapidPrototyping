@@ -85,15 +85,165 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     public @PlayerControls()
     {
         asset = InputActionAsset.FromJson(@"{
-    ""version"": 0,
+    ""version"": 1,
     ""name"": ""PlayerControls"",
-    ""maps"": [],
-    ""controlSchemes"": []
+    ""maps"": [
+        {
+            ""name"": ""Players"",
+            ""id"": ""26316f4a-69b2-4e2b-a00c-527c0c20ae09"",
+            ""actions"": [
+                {
+                    ""name"": ""P1 Pivot"",
+                    ""type"": ""Button"",
+                    ""id"": ""c38a226d-b43f-4393-9c2b-d99f599a0116"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""P1 Stab"",
+                    ""type"": ""Button"",
+                    ""id"": ""bbb21898-6335-4ca6-a8d6-67a129544789"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""P1 Swing"",
+                    ""type"": ""Button"",
+                    ""id"": ""99256bd7-62a6-41cf-8d09-8307ee263b1e"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""P2 Pivot"",
+                    ""type"": ""Button"",
+                    ""id"": ""93fe8bc7-da7a-4c61-997d-dfdf21538e2b"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""P2 Stab"",
+                    ""type"": ""Button"",
+                    ""id"": ""80b23b54-1b0e-4582-9853-405414ba2b56"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""P2 Swing"",
+                    ""type"": ""Button"",
+                    ""id"": ""09f4d578-5d64-436d-bba9-9556c18cd663"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""e55a6135-5b2f-48ff-b57e-01edbe3ef650"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyobard"",
+                    ""action"": ""P1 Pivot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5e467503-41d0-49d7-bc61-ba6cc6577578"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyobard"",
+                    ""action"": ""P1 Stab"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5db03261-3599-402b-9765-a6e9a1a42bdf"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyobard"",
+                    ""action"": ""P1 Swing"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b79f1bc7-502f-4a1f-9cc0-73dfd8804ab6"",
+                    ""path"": ""<Keyboard>/i"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyobard"",
+                    ""action"": ""P2 Pivot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""838f7a94-6caa-423a-ba3e-503fd85742e2"",
+                    ""path"": ""<Keyboard>/o"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyobard"",
+                    ""action"": ""P2 Stab"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""387f8ce5-2ab9-43c4-9701-061d67f77dbc"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyobard"",
+                    ""action"": ""P2 Swing"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        }
+    ],
+    ""controlSchemes"": [
+        {
+            ""name"": ""Keyobard"",
+            ""bindingGroup"": ""Keyobard"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Keyboard>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                }
+            ]
+        }
+    ]
 }");
+        // Players
+        m_Players = asset.FindActionMap("Players", throwIfNotFound: true);
+        m_Players_P1Pivot = m_Players.FindAction("P1 Pivot", throwIfNotFound: true);
+        m_Players_P1Stab = m_Players.FindAction("P1 Stab", throwIfNotFound: true);
+        m_Players_P1Swing = m_Players.FindAction("P1 Swing", throwIfNotFound: true);
+        m_Players_P2Pivot = m_Players.FindAction("P2 Pivot", throwIfNotFound: true);
+        m_Players_P2Stab = m_Players.FindAction("P2 Stab", throwIfNotFound: true);
+        m_Players_P2Swing = m_Players.FindAction("P2 Swing", throwIfNotFound: true);
     }
 
     ~@PlayerControls()
     {
+        UnityEngine.Debug.Assert(!m_Players.enabled, "This will cause a leak and performance issues, PlayerControls.Players.Disable() has not been called.");
     }
 
     /// <summary>
@@ -164,5 +314,219 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     public int FindBinding(InputBinding bindingMask, out InputAction action)
     {
         return asset.FindBinding(bindingMask, out action);
+    }
+
+    // Players
+    private readonly InputActionMap m_Players;
+    private List<IPlayersActions> m_PlayersActionsCallbackInterfaces = new List<IPlayersActions>();
+    private readonly InputAction m_Players_P1Pivot;
+    private readonly InputAction m_Players_P1Stab;
+    private readonly InputAction m_Players_P1Swing;
+    private readonly InputAction m_Players_P2Pivot;
+    private readonly InputAction m_Players_P2Stab;
+    private readonly InputAction m_Players_P2Swing;
+    /// <summary>
+    /// Provides access to input actions defined in input action map "Players".
+    /// </summary>
+    public struct PlayersActions
+    {
+        private @PlayerControls m_Wrapper;
+
+        /// <summary>
+        /// Construct a new instance of the input action map wrapper class.
+        /// </summary>
+        public PlayersActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action "Players/P1Pivot".
+        /// </summary>
+        public InputAction @P1Pivot => m_Wrapper.m_Players_P1Pivot;
+        /// <summary>
+        /// Provides access to the underlying input action "Players/P1Stab".
+        /// </summary>
+        public InputAction @P1Stab => m_Wrapper.m_Players_P1Stab;
+        /// <summary>
+        /// Provides access to the underlying input action "Players/P1Swing".
+        /// </summary>
+        public InputAction @P1Swing => m_Wrapper.m_Players_P1Swing;
+        /// <summary>
+        /// Provides access to the underlying input action "Players/P2Pivot".
+        /// </summary>
+        public InputAction @P2Pivot => m_Wrapper.m_Players_P2Pivot;
+        /// <summary>
+        /// Provides access to the underlying input action "Players/P2Stab".
+        /// </summary>
+        public InputAction @P2Stab => m_Wrapper.m_Players_P2Stab;
+        /// <summary>
+        /// Provides access to the underlying input action "Players/P2Swing".
+        /// </summary>
+        public InputAction @P2Swing => m_Wrapper.m_Players_P2Swing;
+        /// <summary>
+        /// Provides access to the underlying input action map instance.
+        /// </summary>
+        public InputActionMap Get() { return m_Wrapper.m_Players; }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+        public void Enable() { Get().Enable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+        public void Disable() { Get().Disable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+        public bool enabled => Get().enabled;
+        /// <summary>
+        /// Implicitly converts an <see ref="PlayersActions" /> to an <see ref="InputActionMap" /> instance.
+        /// </summary>
+        public static implicit operator InputActionMap(PlayersActions set) { return set.Get(); }
+        /// <summary>
+        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <param name="instance">Callback instance.</param>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+        /// </remarks>
+        /// <seealso cref="PlayersActions" />
+        public void AddCallbacks(IPlayersActions instance)
+        {
+            if (instance == null || m_Wrapper.m_PlayersActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_PlayersActionsCallbackInterfaces.Add(instance);
+            @P1Pivot.started += instance.OnP1Pivot;
+            @P1Pivot.performed += instance.OnP1Pivot;
+            @P1Pivot.canceled += instance.OnP1Pivot;
+            @P1Stab.started += instance.OnP1Stab;
+            @P1Stab.performed += instance.OnP1Stab;
+            @P1Stab.canceled += instance.OnP1Stab;
+            @P1Swing.started += instance.OnP1Swing;
+            @P1Swing.performed += instance.OnP1Swing;
+            @P1Swing.canceled += instance.OnP1Swing;
+            @P2Pivot.started += instance.OnP2Pivot;
+            @P2Pivot.performed += instance.OnP2Pivot;
+            @P2Pivot.canceled += instance.OnP2Pivot;
+            @P2Stab.started += instance.OnP2Stab;
+            @P2Stab.performed += instance.OnP2Stab;
+            @P2Stab.canceled += instance.OnP2Stab;
+            @P2Swing.started += instance.OnP2Swing;
+            @P2Swing.performed += instance.OnP2Swing;
+            @P2Swing.canceled += instance.OnP2Swing;
+        }
+
+        /// <summary>
+        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+        /// </remarks>
+        /// <seealso cref="PlayersActions" />
+        private void UnregisterCallbacks(IPlayersActions instance)
+        {
+            @P1Pivot.started -= instance.OnP1Pivot;
+            @P1Pivot.performed -= instance.OnP1Pivot;
+            @P1Pivot.canceled -= instance.OnP1Pivot;
+            @P1Stab.started -= instance.OnP1Stab;
+            @P1Stab.performed -= instance.OnP1Stab;
+            @P1Stab.canceled -= instance.OnP1Stab;
+            @P1Swing.started -= instance.OnP1Swing;
+            @P1Swing.performed -= instance.OnP1Swing;
+            @P1Swing.canceled -= instance.OnP1Swing;
+            @P2Pivot.started -= instance.OnP2Pivot;
+            @P2Pivot.performed -= instance.OnP2Pivot;
+            @P2Pivot.canceled -= instance.OnP2Pivot;
+            @P2Stab.started -= instance.OnP2Stab;
+            @P2Stab.performed -= instance.OnP2Stab;
+            @P2Stab.canceled -= instance.OnP2Stab;
+            @P2Swing.started -= instance.OnP2Swing;
+            @P2Swing.performed -= instance.OnP2Swing;
+            @P2Swing.canceled -= instance.OnP2Swing;
+        }
+
+        /// <summary>
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="PlayersActions.UnregisterCallbacks(IPlayersActions)" />.
+        /// </summary>
+        /// <seealso cref="PlayersActions.UnregisterCallbacks(IPlayersActions)" />
+        public void RemoveCallbacks(IPlayersActions instance)
+        {
+            if (m_Wrapper.m_PlayersActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        /// <summary>
+        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+        /// </remarks>
+        /// <seealso cref="PlayersActions.AddCallbacks(IPlayersActions)" />
+        /// <seealso cref="PlayersActions.RemoveCallbacks(IPlayersActions)" />
+        /// <seealso cref="PlayersActions.UnregisterCallbacks(IPlayersActions)" />
+        public void SetCallbacks(IPlayersActions instance)
+        {
+            foreach (var item in m_Wrapper.m_PlayersActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_PlayersActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    /// <summary>
+    /// Provides a new <see cref="PlayersActions" /> instance referencing this action map.
+    /// </summary>
+    public PlayersActions @Players => new PlayersActions(this);
+    private int m_KeyobardSchemeIndex = -1;
+    /// <summary>
+    /// Provides access to the input control scheme.
+    /// </summary>
+    /// <seealso cref="UnityEngine.InputSystem.InputControlScheme" />
+    public InputControlScheme KeyobardScheme
+    {
+        get
+        {
+            if (m_KeyobardSchemeIndex == -1) m_KeyobardSchemeIndex = asset.FindControlSchemeIndex("Keyobard");
+            return asset.controlSchemes[m_KeyobardSchemeIndex];
+        }
+    }
+    /// <summary>
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Players" which allows adding and removing callbacks.
+    /// </summary>
+    /// <seealso cref="PlayersActions.AddCallbacks(IPlayersActions)" />
+    /// <seealso cref="PlayersActions.RemoveCallbacks(IPlayersActions)" />
+    public interface IPlayersActions
+    {
+        /// <summary>
+        /// Method invoked when associated input action "P1 Pivot" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnP1Pivot(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "P1 Stab" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnP1Stab(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "P1 Swing" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnP1Swing(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "P2 Pivot" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnP2Pivot(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "P2 Stab" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnP2Stab(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "P2 Swing" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnP2Swing(InputAction.CallbackContext context);
     }
 }

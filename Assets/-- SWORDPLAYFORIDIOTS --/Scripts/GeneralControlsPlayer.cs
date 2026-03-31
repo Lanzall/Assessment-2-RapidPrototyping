@@ -1,10 +1,14 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using DG.Tweening;
+using Unity.Cinemachine;
+using Unity.VisualScripting;
 
-public class Player2Controls : MonoBehaviour
+public class GeneralControlsPlayer : MonoBehaviour
 {
     [Header("References")]
-    public Animator animator;
+    public Animator P1animator;
+    public CinemachineCamera CineCam;
 
     [Header("Attributes")]
     [SerializeField]
@@ -25,31 +29,31 @@ public class Player2Controls : MonoBehaviour
 
     }
 
-    public void Pivot(InputAction.CallbackContext context)
+    public void PivotP1(InputAction.CallbackContext context)
     {
         if (canAct && context.performed)
         {
-            animator.SetBool("isFrontStance", !animator.GetBool("isFrontStance"));
+            P1animator.SetBool("isFrontStance", !P1animator.GetBool("isFrontStance"));
             isFrontStance = !isFrontStance;
         }
         
         
     }
 
-    public void Stab(InputAction.CallbackContext context)
+    public void StabP1(InputAction.CallbackContext context)
     {
         if (canAct && context.performed)
         {
-            animator.SetTrigger("Stab");
+            P1animator.SetTrigger("Stab");
 
         }
     }
 
-    public void Swing(InputAction.CallbackContext context)
+    public void SwingP1(InputAction.CallbackContext context)
     {
         if (canAct && context.performed)
         {
-            animator.SetTrigger("Swing");
+            P1animator.SetTrigger("Swing");
 
         }
     }
@@ -90,15 +94,16 @@ public class Player2Controls : MonoBehaviour
 
     public void TakeDamage()
     {
-        animator.SetTrigger("TakeDamage");
+        P1animator.SetTrigger("TakeDamage");
         Debug.Log("Damage taken!");
+        CineCam.gameObject.transform.DOShakePosition(.3f, 4f, 10, 90, false, true);
     }
 
     public void DefendDamage()
     {
         if (canAct)
         {
-            animator.SetTrigger("Defend");
+            P1animator.SetTrigger("Defend");
             Debug.Log("Damage Blocked!");
         }
 

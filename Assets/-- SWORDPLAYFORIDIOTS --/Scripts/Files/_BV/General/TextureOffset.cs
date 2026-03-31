@@ -5,7 +5,7 @@ public class TextureOffset : MonoBehaviour
 {
     public float scrollX = 0.5f;
     public float scrollY = 0.5f;
-    private Renderer renderer;
+    private new Renderer renderer;
     
     private void Awake()
     {

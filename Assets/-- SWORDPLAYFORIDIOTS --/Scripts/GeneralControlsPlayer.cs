@@ -17,16 +17,21 @@ public class GeneralControlsPlayer : MonoBehaviour
     private bool isFrontStance;
     private bool canAct;
 
+    private Vector3 originalCamPos;
+    private Tweener camShakeTween;
+
     void Start()
     {
         isFrontStance = true;
         canAct = true;
-        
+        originalCamPos = CineCam.gameObject.transform.localPosition;
+
+
     }
 
     void Update()
     {
-
+        Debug.Log(canAct);
     }
 
     public void PivotP1(InputAction.CallbackContext context)
@@ -63,6 +68,12 @@ public class GeneralControlsPlayer : MonoBehaviour
         canAct = !canAct;
     }
 
+    public void RefreshOnIdle()
+    {
+        //When in Idle animation, resets canAct to true in case of damage during an attack animation, allowing the player to act again.
+        canAct = true;
+    }
+
     public void IncomingStab()
     {
         if (isFrontStance)
@@ -96,7 +107,13 @@ public class GeneralControlsPlayer : MonoBehaviour
     {
         P1animator.SetTrigger("TakeDamage");
         Debug.Log("Damage taken!");
-        CineCam.gameObject.transform.DOShakePosition(.3f, 4f, 10, 90, false, true);
+        camShakeTween?.Kill();
+        camShakeTween = CineCam.gameObject.transform.DOShakePosition(.3f, 4f, 10, 90, false, true).OnComplete(() => ResetCamPos());
+    }
+
+    public void ResetCamPos()
+    {
+        CineCam.gameObject.transform.DOLocalMove(originalCamPos, .1f);
     }
 
     public void DefendDamage()

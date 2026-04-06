@@ -3,16 +3,23 @@ using UnityEngine.InputSystem;
 using DG.Tweening;
 using Unity.Cinemachine;
 using Unity.VisualScripting;
+using UnityEngine.Events;
 
 public class GeneralControlsPlayer : MonoBehaviour
 {
     [Header("References")]
     public Animator P1animator;
     public CinemachineCamera CineCam;
+    public GameObject opponent;
 
-    [Header("Attributes")]
-    [SerializeField]
-    public int Health = 3;
+    [Header("Stats")]
+    public int maxHealth = 3;
+    public int currentHealth;
+
+    [Header("Events")]      // Using this for triggering sound effects, vfx and ragdoll
+    public UnityEvent onHit;
+    public UnityEvent onBlock;
+    public UnityEvent onDeath;
 
     private bool isFrontStance;
     private bool canAct;
@@ -25,8 +32,6 @@ public class GeneralControlsPlayer : MonoBehaviour
         isFrontStance = true;
         canAct = true;
         originalCamPos = CineCam.gameObject.transform.localPosition;
-
-
     }
 
     void Update()
@@ -74,41 +79,13 @@ public class GeneralControlsPlayer : MonoBehaviour
         canAct = true;
     }
 
-    public void IncomingStab()
-    {
-        if (isFrontStance)
-        {
-            //TakeDamage
-            TakeDamage();
-        }
-
-        else
-        {
-            //DefendAnimation
-            DefendDamage();
-        }
-    }
-
-    public void IncomingSwing()
-    {
-        if (isFrontStance)
-        {
-            //DefendAnimation
-            DefendDamage();
-        }
-        else
-        {
-            //TakeDamage
-            TakeDamage();
-        }
-    }
 
     public void TakeDamage()
     {
         P1animator.SetTrigger("TakeDamage");
         Debug.Log("Damage taken!");
         camShakeTween?.Kill();
-        camShakeTween = CineCam.gameObject.transform.DOShakePosition(.3f, 4f, 10, 90, false, true).OnComplete(() => ResetCamPos());
+        camShakeTween = CineCam.gameObject.transform.DOShakePosition(.3f, 2f, 10, 90, false, true).OnComplete(() => ResetCamPos());
     }
 
     public void ResetCamPos()

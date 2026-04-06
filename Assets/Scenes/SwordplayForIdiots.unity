@@ -160,7 +160,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Player1Controls
   P1animator: {fileID: 27591509}
   CineCam: {fileID: 603012265}
-  Health: 3
+  opponent: {fileID: 998278467}
 --- !u!1 &179551378
 GameObject:
   m_ObjectHideFlags: 0
@@ -863,7 +863,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Player1Controls
   P1animator: {fileID: 998278470}
   CineCam: {fileID: 603012265}
-  Health: 3
+  opponent: {fileID: 27591507}
 --- !u!1001 &1477185073
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -8,9 +8,9 @@ using UnityEngine.Events;
 public class GeneralControlsPlayer : MonoBehaviour
 {
     [Header("References")]
-    public Animator P1animator;
+    public Animator animator;
     public CinemachineCamera CineCam;
-    public GameObject opponent;
+    public GeneralControlsPlayer opponent;
 
     [Header("Stats")]
     public int maxHealth = 3;
@@ -32,39 +32,73 @@ public class GeneralControlsPlayer : MonoBehaviour
         isFrontStance = true;
         canAct = true;
         originalCamPos = CineCam.gameObject.transform.localPosition;
+        
     }
 
     void Update()
     {
-        Debug.Log(canAct);
+        //Debug.Log(canAct);
     }
 
-    public void PivotP1(InputAction.CallbackContext context)
+    public void Pivot(InputAction.CallbackContext context)
     {
         if (canAct && context.performed)
         {
-            P1animator.SetBool("isFrontStance", !P1animator.GetBool("isFrontStance"));
+            animator.SetBool("isFrontStance", !animator.GetBool("isFrontStance"));
             isFrontStance = !isFrontStance;
         }
         
         
     }
 
-    public void StabP1(InputAction.CallbackContext context)
+    public void Stab(InputAction.CallbackContext context)   // STAB ANIMATION ACTION -- This only handles the animation triggering, the actual hit check occurs from the following trigger from the animation
     {
         if (canAct && context.performed)
         {
-            P1animator.SetTrigger("Stab");
+            animator.SetTrigger("Stab");
 
         }
     }
 
-    public void SwingP1(InputAction.CallbackContext context)
+    public void StabHit()   // STAB HIT CHECK -- This is triggered from the animation, checking if they're in the correct stance, and will call the opponent's TakeDamage() function if they are, or DefendDamage() if they're not.
+    {
+        if (opponent == null) return;    // In case the opponent reference is not set, to avoid errors
+
+        if (opponent.isFrontStance)
+        {
+            opponent.TakeDamage();
+            onHit.Invoke();     // Invoking the Unity Event when hitting the opponent, for SFX and VFX
+        }
+
+        else
+        {
+            opponent.DefendDamage();
+            onBlock.Invoke();   // Invoking the Unity Event when blocking the attack, for SFX and VFX
+        }
+    }
+
+    public void Swing(InputAction.CallbackContext context)
     {
         if (canAct && context.performed)
         {
-            P1animator.SetTrigger("Swing");
+            animator.SetTrigger("Swing");
 
+        }
+    }
+
+    public void SwingHit()
+    {
+        if (opponent == null) return;
+
+        if (!opponent.isFrontStance)
+        {
+            opponent.TakeDamage();
+            onHit.Invoke();
+        }
+        else
+        {
+            opponent.DefendDamage();
+            onBlock.Invoke();
         }
     }
 
@@ -82,7 +116,13 @@ public class GeneralControlsPlayer : MonoBehaviour
 
     public void TakeDamage()
     {
-        P1animator.SetTrigger("TakeDamage");
+        currentHealth--;    // -- reduces the health by 1
+        if(currentHealth <= 0)
+        {
+            Die();
+        }
+
+        animator.SetTrigger("TakeDamage");
         Debug.Log("Damage taken!");
         camShakeTween?.Kill();
         camShakeTween = CineCam.gameObject.transform.DOShakePosition(.3f, 2f, 10, 90, false, true).OnComplete(() => ResetCamPos());
@@ -97,7 +137,7 @@ public class GeneralControlsPlayer : MonoBehaviour
     {
         if (canAct)
         {
-            P1animator.SetTrigger("Defend");
+            animator.SetTrigger("Defend");
             Debug.Log("Damage Blocked!");
         }
 
@@ -105,5 +145,13 @@ public class GeneralControlsPlayer : MonoBehaviour
         {
             TakeDamage();
         }
+    }
+
+    public void Die()
+    {
+        //This is where the character would die
+        onDeath.Invoke();   // Invoking the Unity Event when the player dies, for SFX, VFX and ragdoll
+        Debug.Log("Player has died!");
+        return;
     }
 }

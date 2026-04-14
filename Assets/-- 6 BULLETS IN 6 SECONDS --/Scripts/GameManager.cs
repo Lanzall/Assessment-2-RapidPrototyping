@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI clicksText;
     public TextMeshProUGUI resultsText;
     public Animator cigarAnimator;
+    public Animator revolverAnimator;
 
     [Header("Game Settings")]
     public float timeLimit = 3f;
@@ -48,8 +49,6 @@ public class GameManager : MonoBehaviour
         if (!isAnswering) return;
 
         currentTime -= Time.deltaTime;
-        Debug.Log("Time left: " + currentTime.ToString("F2") + " seconds");
-        Debug.Log("Clicks: " + clickCount);
 
         if (currentTime <= 0)
         {
@@ -66,6 +65,7 @@ public class GameManager : MonoBehaviour
             clickCount++;
             clicksText.text = "" + clickCount;
             //Play shoot sound + animation here
+            revolverAnimator.SetTrigger("CountUp");
         }
     }
 

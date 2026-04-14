@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI resultsText;
     public Animator cigarAnimator;
     public Animator revolverAnimator;
+    public Animator cowboyAnimator;
 
     [Header("Game Settings")]
     public float timeLimit = 3f;
@@ -66,6 +67,7 @@ public class GameManager : MonoBehaviour
             clicksText.text = "" + clickCount;
             //Play shoot sound + animation here
             revolverAnimator.SetTrigger("CountUp");
+            cowboyAnimator.SetTrigger("Shoot");
         }
     }
 

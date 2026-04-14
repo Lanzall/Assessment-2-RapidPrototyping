@@ -4,15 +4,13 @@ using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using UnityEditor.Timeline.Actions;
 using System.Collections;
+using Unity.VectorGraphics;
 
 public class TitleScreen : MonoBehaviour
 {
     [Header("References")]
     public Animator howToPlayAnim;
-    public Animator fadeController;
     public Canvas mainCanvas;
-    public Canvas fadeCanvas;
-
 
     public InputAction closeWindowAction;
 
@@ -32,24 +30,9 @@ public class TitleScreen : MonoBehaviour
         
     }
 
-    public void FadeComplete()
-    {
-        fadeCanvas.enabled = false;
-    }
-
     public void StartGame()
     {
-        fadeCanvas.enabled = true;
-        StartCoroutine(StartingGame("6Bullets"));
-    }
-
-    private IEnumerator StartingGame(string sceneName)
-    {
-        fadeController.SetTrigger("FadeEnable");
-
-        yield return new WaitForSeconds(1f);
-
-        SceneManager.LoadScene(sceneName);
+        SceneManager.LoadScene("6Bullets");
     }
 
     public void HowToPlay()

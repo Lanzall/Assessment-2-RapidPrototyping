@@ -1445,7 +1445,7 @@ MonoBehaviour:
     m_ActionName: 'Players/P2 Swing[/Keyboard/p]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyobard
-  m_DefaultActionMap: Players
+  m_DefaultActionMap: 26316f4a-69b2-4e2b-a00c-527c0c20ae09
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!1 &1708220026

@@ -89,7 +89,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     ""name"": ""PlayerControls"",
     ""maps"": [
         {
-            ""name"": ""Players"",
+            ""name"": ""SwordFightingForIdiots"",
             ""id"": ""26316f4a-69b2-4e2b-a00c-527c0c20ae09"",
             ""actions"": [
                 {
@@ -231,19 +231,19 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         }
     ]
 }");
-        // Players
-        m_Players = asset.FindActionMap("Players", throwIfNotFound: true);
-        m_Players_P1Pivot = m_Players.FindAction("P1 Pivot", throwIfNotFound: true);
-        m_Players_P1Stab = m_Players.FindAction("P1 Stab", throwIfNotFound: true);
-        m_Players_P1Swing = m_Players.FindAction("P1 Swing", throwIfNotFound: true);
-        m_Players_P2Pivot = m_Players.FindAction("P2 Pivot", throwIfNotFound: true);
-        m_Players_P2Stab = m_Players.FindAction("P2 Stab", throwIfNotFound: true);
-        m_Players_P2Swing = m_Players.FindAction("P2 Swing", throwIfNotFound: true);
+        // SwordFightingForIdiots
+        m_SwordFightingForIdiots = asset.FindActionMap("SwordFightingForIdiots", throwIfNotFound: true);
+        m_SwordFightingForIdiots_P1Pivot = m_SwordFightingForIdiots.FindAction("P1 Pivot", throwIfNotFound: true);
+        m_SwordFightingForIdiots_P1Stab = m_SwordFightingForIdiots.FindAction("P1 Stab", throwIfNotFound: true);
+        m_SwordFightingForIdiots_P1Swing = m_SwordFightingForIdiots.FindAction("P1 Swing", throwIfNotFound: true);
+        m_SwordFightingForIdiots_P2Pivot = m_SwordFightingForIdiots.FindAction("P2 Pivot", throwIfNotFound: true);
+        m_SwordFightingForIdiots_P2Stab = m_SwordFightingForIdiots.FindAction("P2 Stab", throwIfNotFound: true);
+        m_SwordFightingForIdiots_P2Swing = m_SwordFightingForIdiots.FindAction("P2 Swing", throwIfNotFound: true);
     }
 
     ~@PlayerControls()
     {
-        UnityEngine.Debug.Assert(!m_Players.enabled, "This will cause a leak and performance issues, PlayerControls.Players.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_SwordFightingForIdiots.enabled, "This will cause a leak and performance issues, PlayerControls.SwordFightingForIdiots.Disable() has not been called.");
     }
 
     /// <summary>
@@ -316,54 +316,54 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // Players
-    private readonly InputActionMap m_Players;
-    private List<IPlayersActions> m_PlayersActionsCallbackInterfaces = new List<IPlayersActions>();
-    private readonly InputAction m_Players_P1Pivot;
-    private readonly InputAction m_Players_P1Stab;
-    private readonly InputAction m_Players_P1Swing;
-    private readonly InputAction m_Players_P2Pivot;
-    private readonly InputAction m_Players_P2Stab;
-    private readonly InputAction m_Players_P2Swing;
+    // SwordFightingForIdiots
+    private readonly InputActionMap m_SwordFightingForIdiots;
+    private List<ISwordFightingForIdiotsActions> m_SwordFightingForIdiotsActionsCallbackInterfaces = new List<ISwordFightingForIdiotsActions>();
+    private readonly InputAction m_SwordFightingForIdiots_P1Pivot;
+    private readonly InputAction m_SwordFightingForIdiots_P1Stab;
+    private readonly InputAction m_SwordFightingForIdiots_P1Swing;
+    private readonly InputAction m_SwordFightingForIdiots_P2Pivot;
+    private readonly InputAction m_SwordFightingForIdiots_P2Stab;
+    private readonly InputAction m_SwordFightingForIdiots_P2Swing;
     /// <summary>
-    /// Provides access to input actions defined in input action map "Players".
+    /// Provides access to input actions defined in input action map "SwordFightingForIdiots".
     /// </summary>
-    public struct PlayersActions
+    public struct SwordFightingForIdiotsActions
     {
         private @PlayerControls m_Wrapper;
 
         /// <summary>
         /// Construct a new instance of the input action map wrapper class.
         /// </summary>
-        public PlayersActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public SwordFightingForIdiotsActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         /// <summary>
-        /// Provides access to the underlying input action "Players/P1Pivot".
+        /// Provides access to the underlying input action "SwordFightingForIdiots/P1Pivot".
         /// </summary>
-        public InputAction @P1Pivot => m_Wrapper.m_Players_P1Pivot;
+        public InputAction @P1Pivot => m_Wrapper.m_SwordFightingForIdiots_P1Pivot;
         /// <summary>
-        /// Provides access to the underlying input action "Players/P1Stab".
+        /// Provides access to the underlying input action "SwordFightingForIdiots/P1Stab".
         /// </summary>
-        public InputAction @P1Stab => m_Wrapper.m_Players_P1Stab;
+        public InputAction @P1Stab => m_Wrapper.m_SwordFightingForIdiots_P1Stab;
         /// <summary>
-        /// Provides access to the underlying input action "Players/P1Swing".
+        /// Provides access to the underlying input action "SwordFightingForIdiots/P1Swing".
         /// </summary>
-        public InputAction @P1Swing => m_Wrapper.m_Players_P1Swing;
+        public InputAction @P1Swing => m_Wrapper.m_SwordFightingForIdiots_P1Swing;
         /// <summary>
-        /// Provides access to the underlying input action "Players/P2Pivot".
+        /// Provides access to the underlying input action "SwordFightingForIdiots/P2Pivot".
         /// </summary>
-        public InputAction @P2Pivot => m_Wrapper.m_Players_P2Pivot;
+        public InputAction @P2Pivot => m_Wrapper.m_SwordFightingForIdiots_P2Pivot;
         /// <summary>
-        /// Provides access to the underlying input action "Players/P2Stab".
+        /// Provides access to the underlying input action "SwordFightingForIdiots/P2Stab".
         /// </summary>
-        public InputAction @P2Stab => m_Wrapper.m_Players_P2Stab;
+        public InputAction @P2Stab => m_Wrapper.m_SwordFightingForIdiots_P2Stab;
         /// <summary>
-        /// Provides access to the underlying input action "Players/P2Swing".
+        /// Provides access to the underlying input action "SwordFightingForIdiots/P2Swing".
         /// </summary>
-        public InputAction @P2Swing => m_Wrapper.m_Players_P2Swing;
+        public InputAction @P2Swing => m_Wrapper.m_SwordFightingForIdiots_P2Swing;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
-        public InputActionMap Get() { return m_Wrapper.m_Players; }
+        public InputActionMap Get() { return m_Wrapper.m_SwordFightingForIdiots; }
         /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
         public void Enable() { Get().Enable(); }
         /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
@@ -371,9 +371,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
         public bool enabled => Get().enabled;
         /// <summary>
-        /// Implicitly converts an <see ref="PlayersActions" /> to an <see ref="InputActionMap" /> instance.
+        /// Implicitly converts an <see ref="SwordFightingForIdiotsActions" /> to an <see ref="InputActionMap" /> instance.
         /// </summary>
-        public static implicit operator InputActionMap(PlayersActions set) { return set.Get(); }
+        public static implicit operator InputActionMap(SwordFightingForIdiotsActions set) { return set.Get(); }
         /// <summary>
         /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
         /// </summary>
@@ -381,11 +381,11 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <remarks>
         /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
         /// </remarks>
-        /// <seealso cref="PlayersActions" />
-        public void AddCallbacks(IPlayersActions instance)
+        /// <seealso cref="SwordFightingForIdiotsActions" />
+        public void AddCallbacks(ISwordFightingForIdiotsActions instance)
         {
-            if (instance == null || m_Wrapper.m_PlayersActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_PlayersActionsCallbackInterfaces.Add(instance);
+            if (instance == null || m_Wrapper.m_SwordFightingForIdiotsActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_SwordFightingForIdiotsActionsCallbackInterfaces.Add(instance);
             @P1Pivot.started += instance.OnP1Pivot;
             @P1Pivot.performed += instance.OnP1Pivot;
             @P1Pivot.canceled += instance.OnP1Pivot;
@@ -412,8 +412,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <remarks>
         /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
         /// </remarks>
-        /// <seealso cref="PlayersActions" />
-        private void UnregisterCallbacks(IPlayersActions instance)
+        /// <seealso cref="SwordFightingForIdiotsActions" />
+        private void UnregisterCallbacks(ISwordFightingForIdiotsActions instance)
         {
             @P1Pivot.started -= instance.OnP1Pivot;
             @P1Pivot.performed -= instance.OnP1Pivot;
@@ -436,12 +436,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         }
 
         /// <summary>
-        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="PlayersActions.UnregisterCallbacks(IPlayersActions)" />.
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="SwordFightingForIdiotsActions.UnregisterCallbacks(ISwordFightingForIdiotsActions)" />.
         /// </summary>
-        /// <seealso cref="PlayersActions.UnregisterCallbacks(IPlayersActions)" />
-        public void RemoveCallbacks(IPlayersActions instance)
+        /// <seealso cref="SwordFightingForIdiotsActions.UnregisterCallbacks(ISwordFightingForIdiotsActions)" />
+        public void RemoveCallbacks(ISwordFightingForIdiotsActions instance)
         {
-            if (m_Wrapper.m_PlayersActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_SwordFightingForIdiotsActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
@@ -451,21 +451,21 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <remarks>
         /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
         /// </remarks>
-        /// <seealso cref="PlayersActions.AddCallbacks(IPlayersActions)" />
-        /// <seealso cref="PlayersActions.RemoveCallbacks(IPlayersActions)" />
-        /// <seealso cref="PlayersActions.UnregisterCallbacks(IPlayersActions)" />
-        public void SetCallbacks(IPlayersActions instance)
+        /// <seealso cref="SwordFightingForIdiotsActions.AddCallbacks(ISwordFightingForIdiotsActions)" />
+        /// <seealso cref="SwordFightingForIdiotsActions.RemoveCallbacks(ISwordFightingForIdiotsActions)" />
+        /// <seealso cref="SwordFightingForIdiotsActions.UnregisterCallbacks(ISwordFightingForIdiotsActions)" />
+        public void SetCallbacks(ISwordFightingForIdiotsActions instance)
         {
-            foreach (var item in m_Wrapper.m_PlayersActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_SwordFightingForIdiotsActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_PlayersActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_SwordFightingForIdiotsActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
     /// <summary>
-    /// Provides a new <see cref="PlayersActions" /> instance referencing this action map.
+    /// Provides a new <see cref="SwordFightingForIdiotsActions" /> instance referencing this action map.
     /// </summary>
-    public PlayersActions @Players => new PlayersActions(this);
+    public SwordFightingForIdiotsActions @SwordFightingForIdiots => new SwordFightingForIdiotsActions(this);
     private int m_KeyobardSchemeIndex = -1;
     /// <summary>
     /// Provides access to the input control scheme.
@@ -480,11 +480,11 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         }
     }
     /// <summary>
-    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Players" which allows adding and removing callbacks.
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "SwordFightingForIdiots" which allows adding and removing callbacks.
     /// </summary>
-    /// <seealso cref="PlayersActions.AddCallbacks(IPlayersActions)" />
-    /// <seealso cref="PlayersActions.RemoveCallbacks(IPlayersActions)" />
-    public interface IPlayersActions
+    /// <seealso cref="SwordFightingForIdiotsActions.AddCallbacks(ISwordFightingForIdiotsActions)" />
+    /// <seealso cref="SwordFightingForIdiotsActions.RemoveCallbacks(ISwordFightingForIdiotsActions)" />
+    public interface ISwordFightingForIdiotsActions
     {
         /// <summary>
         /// Method invoked when associated input action "P1 Pivot" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.

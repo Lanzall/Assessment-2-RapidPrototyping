@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
-using UnityEditor.Timeline.Actions;
 using System.Collections;
 using Unity.VectorGraphics;
 
@@ -23,11 +22,6 @@ public class TitleScreen : MonoBehaviour
 
         howToPlayAnim.SetTrigger("isClosed");
         helpWindowOpen = false;
-    }
-
-    void Update()
-    {
-        
     }
 
     public void StartGame()

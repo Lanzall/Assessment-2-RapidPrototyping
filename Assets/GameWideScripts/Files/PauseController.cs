@@ -1,9 +1,26 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PauseController : MonoBehaviour
 {
     public GameObject pausePanel;
+    public TextMeshProUGUI questionText;
     private bool paused;
+
+    public InputAction pauseGameAction;
+
+    private void OnEnable()
+    {
+        pauseGameAction.Enable();
+        pauseGameAction.performed += OnPause;
+    }
+
+    private void OnDisable()
+    {
+        pauseGameAction.performed -= OnPause;
+        pauseGameAction.Disable();
+    }
 
     void Start()
     {
@@ -12,10 +29,10 @@ public class PauseController : MonoBehaviour
         Time.timeScale = 1;
     }
 
-    void Update()
+
+    public void OnPause(InputAction.CallbackContext context)
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-            Pause();
+        Pause();
     }
 
     public void Pause()
@@ -23,5 +40,10 @@ public class PauseController : MonoBehaviour
         paused = !paused;
         pausePanel.SetActive(paused);
         Time.timeScale = paused ? 0 : 1;
+
+        if (paused == true)
+        {
+            questionText.text = "no cheating";
+        }
     }
 }

@@ -5,6 +5,9 @@ using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
+    [Header("References")]
+    public GameObject pausePanel;
+
     [Header("UI")]
     public TextMeshProUGUI questionText;
     public TextMeshProUGUI clicksText;
@@ -55,12 +58,14 @@ public class GameManager : MonoBehaviour
         {
             EndQuestion();
         }
+
     }
 
     // This replaces the old Input.GetMouseButtonDown(0) logic
     private void OnClick(InputAction.CallbackContext context)
     {
         if (!isAnswering) return;
+        if (pausePanel.activeInHierarchy) return;
         if (clickCount < maxClicks)
         {
             clickCount++;

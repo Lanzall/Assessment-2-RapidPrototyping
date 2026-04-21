@@ -13,30 +13,50 @@ public class TVInteraction : MonoBehaviour
     public Material onMat;
     private Renderer rend;
 
+    public TVManager manager;
+
+    public bool isActiveTV = false;
+
     //Game UI Prompt reference here
-    public bool isHoveringTV;
 
     void Start()
     {
         rend = GetComponent<Renderer>();
         rend.material = offMat;
+        //tvCam.Priority = innactiveCameraPriority;
+
+    }
+
+    public void OnHoverEnter()
+    {
+        if(!isActiveTV)
+            rend.material = onMat;
+    }
+
+    public void OnHoverExit()
+    {
+        if(!isActiveTV)
+            rend.material = offMat;
+    }
+
+    public void OnClick()
+    {
+        manager.ActivateTV(this);
+
+        isActiveTV = true;
+        rend.material = onMat;
+
+        tvCam.Priority = activeCameraPriority;
+    }
+
+    public void Deactivate()
+    {
+        isActiveTV = false;
+        rend.material = offMat;
+
         tvCam.Priority = innactiveCameraPriority;
 
-    }
-
-    private void OnMouseEnter()
-    {
-        rend.material = onMat;
-    }
-
-    private void OnMouseExit()
-    {
-        rend.material = offMat;
-    }
-
-    private void OnMouseDown()
-    {
-        tvCam.Priority = activeCameraPriority;
+        //prompt UI
     }
 
     private void BackToMenu(CinemachineCamera mainCam)

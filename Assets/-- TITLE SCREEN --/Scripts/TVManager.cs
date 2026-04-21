@@ -7,8 +7,14 @@ public class TVManager : MonoBehaviour
     public TVInteraction currentTV;
 
     public CustomFade titleFader;
+    public CustomFade BlackFade;
 
     public CinemachineCamera mainCam;
+
+    public void Start()
+    {
+        BlackFade.FadeOut();
+    }
 
     public void ActivateTV(TVInteraction tv)
     {

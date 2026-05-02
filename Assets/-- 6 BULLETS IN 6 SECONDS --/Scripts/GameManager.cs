@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,23 +10,40 @@ public class GameManager : MonoBehaviour
     public GameObject pausePanel;
 
     [Header("UI")]
-    public TextMeshProUGUI questionText;
     public TextMeshProUGUI clicksText;
     public TextMeshProUGUI resultsText;
+    public TextMeshProUGUI readyText;
+    public TextMeshProUGUI fireText;
+
     public Animator cigarAnimator;
-    public Animator revolverAnimator;
+    //public Animator revolverAnimator;
     public Animator cowboyAnimator;
 
+
+
     [Header("Game Settings")]
-    public float timeLimit = 3f;
+    public float timeLimit = 1f;
     public int maxClicks = 6;
     public int betweenQuestionsDelay = 3;
 
     private int num1, num2, correctAnswer;
+    private int num1Display, num2Display; // For card display purposes
     private string operatorSymbol;
     private float currentTime;
     private int clickCount = 0;
     private bool isAnswering = false;
+
+    [Header("Playing Cards")]
+    public GameObject cardNum1;
+    public GameObject cardOperator;
+    public GameObject cardNum2;
+    public Animator cardsAnimator;
+
+    public Sprite[] numberCards; // Index 1 to 6
+    public Sprite plusCard;
+    public Sprite minusCard;
+
+    public float revealDuration = 2f;
 
     // Add this for the new input system
     public InputAction clickAction;
@@ -46,6 +64,10 @@ public class GameManager : MonoBehaviour
     {
         resultsText.text = "";
         GenerateNewQuestion();
+
+        // Setting UI text to be disabled first, add more if needed
+        fireText.gameObject.SetActive(false);
+        clicksText.gameObject.SetActive(false);
     }
 
     void Update()
@@ -71,13 +93,14 @@ public class GameManager : MonoBehaviour
             clickCount++;
             clicksText.text = "" + clickCount;
             //Play shoot sound + animation here
-            revolverAnimator.SetTrigger("CountUp");
-            cowboyAnimator.SetTrigger("Shoot");
+            //revolverAnimator.SetTrigger("CountUp");
+            cowboyAnimator.SetInteger("BulletCount", clickCount);
         }
     }
 
     void GenerateNewQuestion()
     {
+        readyText.gameObject.SetActive(true);
         clickCount = 0;
         currentTime = timeLimit;
         clicksText.text = "0";
@@ -102,8 +125,51 @@ public class GameManager : MonoBehaviour
             operatorSymbol = "-";
         }
 
-        questionText.text = $"{num1} {operatorSymbol} {num2}";
+        isAnswering = false;
+
+        // Make sure card numbers are correct
+        num1Display = num1 - 1; // Adjust for 0-based index
+        num2Display = num2 - 1; // Adjust for 0-based index
+
+        // Set the card sprites
+        cardNum1.GetComponent<SpriteRenderer>().sprite = numberCards[num1Display];
+        cardNum2.GetComponent<SpriteRenderer>().sprite = numberCards[num2Display];
+        cardOperator.GetComponent<SpriteRenderer>().sprite = operatorSymbol == "+" ? plusCard : minusCard;
+
+        // Deal the cards
+        cardNum1.gameObject.SetActive(true);
+        cardNum2.gameObject.SetActive(true);
+        cardOperator.gameObject.SetActive(true);
+        cardsAnimator.Play("CardsDealt");
+
+        // Hide Player Sprites
+        cowboyAnimator.gameObject.SetActive(false);
+
+        // Start the reveal coroutine
+        StartCoroutine(RevealCards());
+    }
+
+    private IEnumerator RevealCards()
+    {
+        yield return new WaitForSeconds(revealDuration);
+
+        readyText.gameObject.SetActive(false);
+        fireText.gameObject.SetActive(true);
+        clicksText.gameObject.SetActive(true);
+
         isAnswering = true;
+
+        cowboyAnimator.gameObject.SetActive(true);
+        cardsAnimator.Play("ReturnCards");
+
+        // Wait for 6 frames then disable fireText
+        yield return new WaitForSeconds(0.5f);
+        fireText.gameObject.SetActive(false);
+
+        cardNum1.gameObject.SetActive(false);
+        cardNum2.gameObject.SetActive(false);
+        cardOperator.gameObject.SetActive(false);
+
     }
 
     void EndQuestion()
@@ -112,8 +178,6 @@ public class GameManager : MonoBehaviour
         cigarAnimator.SetTrigger("EmptyTimer");
 
         bool isCorrect = clickCount == correctAnswer;
-
-        questionText.text = "";
 
         if (isCorrect)
         {

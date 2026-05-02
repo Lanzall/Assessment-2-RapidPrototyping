@@ -3,11 +3,15 @@ using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 using System.Collections;
+using UnityEditor;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     [Header("References")]
     public GameObject pausePanel;
+    private AudioPlayer audioPlayer;
+    public GameObject gameOverPanel;
 
     [Header("UI")]
     public TextMeshProUGUI clicksText;
@@ -19,7 +23,12 @@ public class GameManager : MonoBehaviour
     //public Animator revolverAnimator;
     public Animator cowboyAnimator;
 
-
+    [Header("Player Stats")]
+    public int maxHP = 6;
+    public int currentHP;
+    public Image[] heartSprites;
+    public Sprite fullHeart;
+    public Sprite emptyHeart;
 
     [Header("Game Settings")]
     public float timeLimit = 1f;
@@ -62,12 +71,22 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        currentHP = maxHP;
+        UpdateHearts();
+
         resultsText.text = "";
         GenerateNewQuestion();
 
         // Setting UI text to be disabled first, add more if needed
         fireText.gameObject.SetActive(false);
         clicksText.gameObject.SetActive(false);
+
+        audioPlayer = GetComponent<AudioPlayer>();
+
+        if (audioPlayer == null)
+        {
+            Debug.LogError("AudioPlayer component missing from GameManager!");
+        }
     }
 
     void Update()
@@ -95,6 +114,8 @@ public class GameManager : MonoBehaviour
             //Play shoot sound + animation here
             //revolverAnimator.SetTrigger("CountUp");
             cowboyAnimator.SetInteger("BulletCount", clickCount);
+            audioPlayer.PlayClip("Spin");
+            audioPlayer.PlayClipFromGroup("Prep", clickCount - 1);
         }
     }
 
@@ -106,6 +127,9 @@ public class GameManager : MonoBehaviour
         clicksText.text = "0";
         resultsText.text = "";
         cigarAnimator.SetTrigger("StartTimer");
+
+        if (audioPlayer != null)
+            audioPlayer.PlayRandomFromGroup("Shuffle");
 
         //Generate simple maths: + or -, results always between 1 and 6
         bool isAddition = Random.value > 0.5f;
@@ -145,8 +169,8 @@ public class GameManager : MonoBehaviour
         // Hide Player Sprites
         cowboyAnimator.gameObject.SetActive(false);
 
-        // Start the reveal coroutine
-        StartCoroutine(RevealCards());
+    // Start the reveal coroutine
+    StartCoroutine(RevealCards());
     }
 
     private IEnumerator RevealCards()
@@ -156,6 +180,8 @@ public class GameManager : MonoBehaviour
         readyText.gameObject.SetActive(false);
         fireText.gameObject.SetActive(true);
         clicksText.gameObject.SetActive(true);
+
+        audioPlayer.PlayClip("Start");
 
         isAnswering = true;
 
@@ -186,11 +212,35 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            int damage = Mathf.Abs(clickCount - correctAnswer);
+            currentHP -= damage;
+            if(currentHP < 0) currentHP = 0;
+
+            UpdateHearts();
+
+            if (currentHP >= 0)
+            {
+                // Run Game Over
+            }
+
             resultsText.text = "YOU LOSE!";
             // play lose sound, animation, player death fx
         }
 
         // Wait a few seconds, then asks a new question
         Invoke("GenerateNewQuestion", betweenQuestionsDelay);
+    }
+
+    void UpdateHearts()
+    {
+        for (int i = 0; i < heartSprites.Length; i++)
+        {
+            heartSprites[i].sprite = i < currentHP ? fullHeart : emptyHeart;
+        }
+    }
+
+    public void GameOver()
+    {
+        //Game over stuff here
     }
 }

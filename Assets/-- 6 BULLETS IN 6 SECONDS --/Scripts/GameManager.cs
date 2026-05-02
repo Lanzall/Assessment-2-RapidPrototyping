@@ -11,6 +11,9 @@ public class GameManager : MonoBehaviour
 {
     [Header("References")]
     public GameObject pausePanel;
+    public GameObject reticule;
+    public GameObject enemy;
+    public Animator enemyAnimator;
     private AudioPlayer audioPlayer;
 
     [Header("Game Over")]
@@ -19,7 +22,6 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI highestScoreText;
 
     [Header("UI")]
-    public TextMeshProUGUI clicksText;
     public TextMeshProUGUI resultsText;
     public TextMeshProUGUI readyText;
     public TextMeshProUGUI fireText;
@@ -28,8 +30,9 @@ public class GameManager : MonoBehaviour
     public CinemachineCamera cardsCam;
     public CinemachineCamera combatCam;
 
-    //public Animator revolverAnimator;
     public Animator cowboyAnimator;
+    public Animator revolverAnimator;
+    public string[] spinAnimations;
 
     [Header("Player Stats")]
     public int maxHP = 6;
@@ -38,11 +41,12 @@ public class GameManager : MonoBehaviour
     public Sprite fullHeart;
     public Sprite emptyHeart;
     public bool isCorrect;
+    public int score = 0;
 
     [Header("Game Settings")]
     public float timeLimit = 1f;
     public int maxClicks = 6;
-    public int betweenQuestionsDelay = 3;
+    public float betweenQuestionsDelay = 1.5f;
 
     private int num1, num2, correctAnswer;
     private int num1Display, num2Display; // For card display purposes
@@ -62,6 +66,12 @@ public class GameManager : MonoBehaviour
     public Sprite minusCard;
 
     public float revealDuration = 2f;
+
+    [Header("Shooting Animations")]
+    public Animator reticleAnimation;
+    public string[] hitAnimations;
+    public string[] missAnimations;
+    public string missfireAnimation;
 
     // Add this for the new input system
     public InputAction clickAction;
@@ -85,19 +95,26 @@ public class GameManager : MonoBehaviour
 
         gameOverPanel.SetActive(false);
 
+        enemy.SetActive(false);
+        reticule.SetActive(false);
+
         resultsText.text = "";
         GenerateNewQuestion();
 
         // Setting UI text to be disabled first, add more if needed
         fireText.gameObject.SetActive(false);
-        clicksText.gameObject.SetActive(false);
-
         audioPlayer = GetComponent<AudioPlayer>();
 
         if (audioPlayer == null)
         {
             Debug.LogError("AudioPlayer component missing from GameManager!");
         }
+
+        // Load Previous Scores
+        int LastScore = PlayerPrefs.GetInt("LastScore", 0);
+        int HighestScore = PlayerPrefs.GetInt("HighestScore", 0);
+
+        highestScoreText.text = "* was previously worth $ " + HighestScore;
     }
 
     void Update()
@@ -117,12 +134,16 @@ public class GameManager : MonoBehaviour
     {
         cardsCam.Priority = 10;
         combatCam.Priority = 1;
+
+        enemy.SetActive(false);
     }
 
     private void SwitchToCombatCam()
     {
         cardsCam.Priority = 1;
         combatCam.Priority = 10;
+
+        enemy.SetActive(true);
     }
 
     // This replaces the old Input.GetMouseButtonDown(0) logic
@@ -134,23 +155,21 @@ public class GameManager : MonoBehaviour
         if (clickCount < maxClicks)
         {
             clickCount++;
-            clicksText.text = "" + clickCount;
-            //Play shoot sound + animation here
-            //revolverAnimator.SetTrigger("CountUp");
             cowboyAnimator.SetInteger("BulletCount", clickCount);
             audioPlayer.PlayClip("Spin");
             audioPlayer.PlayClipFromGroup("Prep", clickCount - 1);
         }
+        revolverAnimator.Play(spinAnimations[clickCount - 1]);
     }
 
     void GenerateNewQuestion()
     {
         if (currentHP <= 0) return;
+        reticule.SetActive(false);
         SwitchToCardsCam();
         readyText.gameObject.SetActive(true);
         clickCount = 0;
         currentTime = timeLimit;
-        clicksText.text = "0";
         resultsText.text = "";
 
         //Generate simple maths: + or -, results always between 1 and 6
@@ -201,7 +220,6 @@ public class GameManager : MonoBehaviour
 
         readyText.gameObject.SetActive(false);
         fireText.gameObject.SetActive(true);
-        clicksText.gameObject.SetActive(true);
 
         audioPlayer.PlayClip("Start");
 
@@ -209,6 +227,7 @@ public class GameManager : MonoBehaviour
         SwitchToCombatCam();
 
         cowboyAnimator.gameObject.SetActive(true);
+        enemyAnimator.Play("Idle");
         cardsAnimator.Play("ReturnCards");
 
         // Wait for 6 frames then disable fireText
@@ -226,27 +245,6 @@ public class GameManager : MonoBehaviour
         isAnswering = false;
 
         isCorrect = clickCount == correctAnswer;
-
-        if (isCorrect)
-        {
-            resultsText.text = "YOU WIN!";
-        }
-        else
-        {
-            int damage = Mathf.Abs(clickCount - correctAnswer);
-            currentHP -= damage;
-            if(currentHP < 0) currentHP = 0;
-
-            UpdateHearts();
-
-            if (currentHP <= 0)
-            {
-                GameOver();
-            }
-
-            resultsText.text = "YOU LOSE!";
-            // play lose sound, animation, player death fx
-        }
 
         StartCoroutine(PlayAimSequence());
     }
@@ -273,19 +271,74 @@ public class GameManager : MonoBehaviour
         // Hide the cowboy after the animation
         cowboyAnimator.gameObject.SetActive(false);
 
+        reticule.SetActive(true);
+
         if (isCorrect)
         {
-            // Play the Hit animation
+            reticleAnimation.Play(hitAnimations[clickCount - 1]);
         }
         else
         {
-            // Play the Missfire animation
+            if (clickCount == 0)
+            {
+                reticleAnimation.Play(missfireAnimation);
+            }
+            else
+            {
+                reticleAnimation.Play(missAnimations[clickCount - 1]);
+            }
+                
         }
+
+        yield return new WaitForSeconds(reticleAnimation.GetCurrentAnimatorStateInfo(0).length);
+
+        if (isCorrect)
+        {
+            //Awesome
+            resultsText.text = "HIT!";
+            enemyAnimator.Play("Death");
+            score++;
+        }
+        else
+        {
+            int damage = Mathf.Abs(clickCount - correctAnswer);
+            currentHP -= damage;
+            if (currentHP < 0) currentHP = 0;
+
+            UpdateHearts();
+
+            if (currentHP <= 0)
+            {
+                GameOver();
+            }
+
+            if (clickCount == 0)
+            {
+                resultsText.text = "TOO LATE!";
+            }
+            else
+
+                resultsText.text = "MISS!";
+        }
+        Invoke("GenerateNewQuestion", betweenQuestionsDelay);
     }
 
     public void GameOver()
     {
+        finalScoreText.text = "$ " + score + "*";
         isAnswering = false;
         gameOverPanel.SetActive(true);
+
+        //Saving the recent score
+        PlayerPrefs.SetInt("LastScore", score);
+
+        // Update the score if needed
+        int highest = PlayerPrefs.GetInt("HighestScore", 0);
+        if (score > highest)
+        {
+            PlayerPrefs.SetInt("HighestScore", score);
+        }
+
+        PlayerPrefs.Save();
     }
 }

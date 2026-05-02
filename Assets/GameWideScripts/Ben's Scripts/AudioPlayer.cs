@@ -45,7 +45,9 @@ public class AudioPlayer : MonoBehaviour
         {
             if (group.groupName == groupName)
             {
+                audioSource.pitch = Random.Range(pitchRange.x, pitchRange.y);
                 PlayRandomFromArray(group.clips);
+                audioSource.pitch = 1f;
                 return;
             }
         }

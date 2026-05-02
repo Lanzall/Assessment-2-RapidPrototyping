@@ -5,19 +5,28 @@ using UnityEngine.InputSystem;
 using System.Collections;
 using UnityEditor;
 using UnityEngine.UI;
+using Unity.Cinemachine;
 
 public class GameManager : MonoBehaviour
 {
     [Header("References")]
     public GameObject pausePanel;
     private AudioPlayer audioPlayer;
+
+    [Header("Game Over")]
     public GameObject gameOverPanel;
+    public TextMeshProUGUI finalScoreText;
+    public TextMeshProUGUI highestScoreText;
 
     [Header("UI")]
     public TextMeshProUGUI clicksText;
     public TextMeshProUGUI resultsText;
     public TextMeshProUGUI readyText;
     public TextMeshProUGUI fireText;
+
+    [Header("Cameras")]
+    public CinemachineCamera cardsCam;
+    public CinemachineCamera combatCam;
 
     public Animator cigarAnimator;
     //public Animator revolverAnimator;
@@ -74,6 +83,8 @@ public class GameManager : MonoBehaviour
         currentHP = maxHP;
         UpdateHearts();
 
+        gameOverPanel.SetActive(false);
+
         resultsText.text = "";
         GenerateNewQuestion();
 
@@ -95,7 +106,7 @@ public class GameManager : MonoBehaviour
 
         currentTime -= Time.deltaTime;
 
-        if (currentTime <= 0)
+        if (currentTime <= 0 && currentHP > 0)
         {
             EndQuestion();
         }
@@ -107,6 +118,7 @@ public class GameManager : MonoBehaviour
     {
         if (!isAnswering) return;
         if (pausePanel.activeInHierarchy) return;
+        if (currentHP <= 0) return;
         if (clickCount < maxClicks)
         {
             clickCount++;
@@ -121,6 +133,7 @@ public class GameManager : MonoBehaviour
 
     void GenerateNewQuestion()
     {
+        if (currentHP <= 0) return;
         readyText.gameObject.SetActive(true);
         clickCount = 0;
         currentTime = timeLimit;
@@ -218,9 +231,9 @@ public class GameManager : MonoBehaviour
 
             UpdateHearts();
 
-            if (currentHP >= 0)
+            if (currentHP <= 0)
             {
-                // Run Game Over
+                GameOver();
             }
 
             resultsText.text = "YOU LOSE!";
@@ -241,6 +254,7 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        //Game over stuff here
+        isAnswering = false;
+        gameOverPanel.SetActive(true);
     }
 }

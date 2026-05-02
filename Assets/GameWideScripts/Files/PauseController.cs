@@ -5,7 +5,6 @@ using UnityEngine.InputSystem;
 public class PauseController : MonoBehaviour
 {
     public GameObject pausePanel;
-    public TextMeshProUGUI questionText;
     private bool paused;
 
     public InputAction pauseGameAction;
@@ -40,10 +39,5 @@ public class PauseController : MonoBehaviour
         paused = !paused;
         pausePanel.SetActive(paused);
         Time.timeScale = paused ? 0 : 1;
-
-        if (paused == true)
-        {
-            questionText.text = "no cheating";
-        }
     }
 }

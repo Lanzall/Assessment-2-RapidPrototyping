@@ -28,7 +28,6 @@ public class GameManager : MonoBehaviour
     public CinemachineCamera cardsCam;
     public CinemachineCamera combatCam;
 
-    public Animator cigarAnimator;
     //public Animator revolverAnimator;
     public Animator cowboyAnimator;
 
@@ -38,6 +37,7 @@ public class GameManager : MonoBehaviour
     public Image[] heartSprites;
     public Sprite fullHeart;
     public Sprite emptyHeart;
+    public bool isCorrect;
 
     [Header("Game Settings")]
     public float timeLimit = 1f;
@@ -113,6 +113,18 @@ public class GameManager : MonoBehaviour
 
     }
 
+    private void SwitchToCardsCam()
+    {
+        cardsCam.Priority = 10;
+        combatCam.Priority = 1;
+    }
+
+    private void SwitchToCombatCam()
+    {
+        cardsCam.Priority = 1;
+        combatCam.Priority = 10;
+    }
+
     // This replaces the old Input.GetMouseButtonDown(0) logic
     private void OnClick(InputAction.CallbackContext context)
     {
@@ -134,15 +146,12 @@ public class GameManager : MonoBehaviour
     void GenerateNewQuestion()
     {
         if (currentHP <= 0) return;
+        SwitchToCardsCam();
         readyText.gameObject.SetActive(true);
         clickCount = 0;
         currentTime = timeLimit;
         clicksText.text = "0";
         resultsText.text = "";
-        cigarAnimator.SetTrigger("StartTimer");
-
-        if (audioPlayer != null)
-            audioPlayer.PlayRandomFromGroup("Shuffle");
 
         //Generate simple maths: + or -, results always between 1 and 6
         bool isAddition = Random.value > 0.5f;
@@ -197,6 +206,7 @@ public class GameManager : MonoBehaviour
         audioPlayer.PlayClip("Start");
 
         isAnswering = true;
+        SwitchToCombatCam();
 
         cowboyAnimator.gameObject.SetActive(true);
         cardsAnimator.Play("ReturnCards");
@@ -214,14 +224,12 @@ public class GameManager : MonoBehaviour
     void EndQuestion()
     {
         isAnswering = false;
-        cigarAnimator.SetTrigger("EmptyTimer");
 
-        bool isCorrect = clickCount == correctAnswer;
+        isCorrect = clickCount == correctAnswer;
 
         if (isCorrect)
         {
             resultsText.text = "YOU WIN!";
-            // play win sound, animation, enemy death fx
         }
         else
         {
@@ -240,8 +248,7 @@ public class GameManager : MonoBehaviour
             // play lose sound, animation, player death fx
         }
 
-        // Wait a few seconds, then asks a new question
-        Invoke("GenerateNewQuestion", betweenQuestionsDelay);
+        StartCoroutine(PlayAimSequence());
     }
 
     void UpdateHearts()
@@ -249,6 +256,30 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < heartSprites.Length; i++)
         {
             heartSprites[i].sprite = i < currentHP ? fullHeart : emptyHeart;
+        }
+    }
+
+    private IEnumerator PlayAimSequence()
+    {
+        cowboyAnimator.SetTrigger("Aiming");
+
+        // Wait until the aiming animation is playing before proceeding
+        yield return new WaitUntil(() =>
+        cowboyAnimator.GetCurrentAnimatorStateInfo(0).IsName("Aiming"));
+
+        // Wait for the aiming animation to finish
+        yield return new WaitForSeconds(cowboyAnimator.GetCurrentAnimatorStateInfo(0).length);
+
+        // Hide the cowboy after the animation
+        cowboyAnimator.gameObject.SetActive(false);
+
+        if (isCorrect)
+        {
+            // Play the Hit animation
+        }
+        else
+        {
+            // Play the Missfire animation
         }
     }
 

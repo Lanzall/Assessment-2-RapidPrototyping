@@ -1085,7 +1085,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: a game by Ben Scard
+  m_text: a game about stabing your friend
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1393,7 +1393,7 @@ PrefabInstance:
     - target: {fileID: -4508315432492276023, guid: ae5df3889769fe342b35e2706cecd4eb, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 639d9502218305546909fe4df19e3aea, type: 2}
+      objectReference: {fileID: 2100000, guid: df17ef0df3a405b43bf8cac5c1760b66, type: 2}
     - target: {fileID: -3139466181626758586, guid: ae5df3889769fe342b35e2706cecd4eb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: -14.933745

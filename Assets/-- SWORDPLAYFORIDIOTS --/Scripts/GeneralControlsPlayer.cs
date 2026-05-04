@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine.Events;
 using System.Collections;
 using UnityEngine.UI;
+using TMPro;
 
 public class GeneralControlsPlayer : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class GeneralControlsPlayer : MonoBehaviour
     public Animator animator;
     public CinemachineCamera CineCam;
     public GeneralControlsPlayer opponent;
+    public TextMeshProUGUI winScreen;
 
     public CinemachineCamera player1DeathCam;
     public CinemachineCamera player2DeathCam;
@@ -39,13 +41,14 @@ public class GeneralControlsPlayer : MonoBehaviour
     void Start()
     {
         isFrontStance = true;
-        canAct = true;
+        canAct = false;
         originalCamPos = CineCam.gameObject.transform.localPosition;
         currentHealth = maxHealth;
 
         CineCam.Priority = 10;   // Setting the main camera to have higher priority than the death cams at the start of the game, so it will be active
         player1DeathCam.Priority = 0;
         player2DeathCam.Priority = 0;
+        winScreen.gameObject.SetActive(false);
 
     }
 
@@ -208,6 +211,9 @@ public class GeneralControlsPlayer : MonoBehaviour
         DOTween.To(() => Time.timeScale, x => Time.timeScale = x, 0.3f, 0f);
             yield return new WaitForSecondsRealtime(1f);
             Time.timeScale = 1f;
+        yield return new WaitForSeconds(4f);
+        winScreen.gameObject.SetActive(true);
+        winScreen.text = $"{(gameObject.name == "Player1" ? "Player 2" : "Player 1")} Wins!".ToUpper();
         yield return null;
     }
 }

@@ -13,6 +13,11 @@ public class TVManager : MonoBehaviour
 
     public void Start()
     {
+       // BlackFade.FadeOut();
+    }
+
+    public void Awake()
+    {
         BlackFade.FadeOut();
     }
 

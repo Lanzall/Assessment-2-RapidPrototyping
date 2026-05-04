@@ -6,19 +6,19 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/TitleScreen.unity
+    path: Assets/--- Scenes ---/TitleScreen.unity
     guid: 62ed2ba88e5696540ae2c0cb92229666
   - enabled: 1
-    path: Assets/Scenes/6Bullets/6BulletsTitle.unity
+    path: Assets/--- Scenes ---/6Bullets/6BulletsTitle.unity
     guid: 761a0c2510bedcb4386e932544f8e319
   - enabled: 1
-    path: Assets/Scenes/6Bullets/6Bullets.unity
+    path: Assets/--- Scenes ---/6Bullets/6Bullets.unity
     guid: 5471b29876605db478488d608079c44c
   - enabled: 1
-    path: Assets/Scenes/Swordplay for Idiots/SFI Title.unity
+    path: Assets/--- Scenes ---/Swordplay for Idiots/SFI Title.unity
     guid: ed677da077d53b6488368795906fe6f1
   - enabled: 1
-    path: Assets/Scenes/Swordplay for Idiots/SwordplayForIdiots.unity
+    path: Assets/--- Scenes ---/Swordplay for Idiots/SwordplayForIdiots.unity
     guid: 2989dacfe848f71468969a5768460c6f
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: b7b5823c09708f64c86f0f4d8a9133a2, type: 3}

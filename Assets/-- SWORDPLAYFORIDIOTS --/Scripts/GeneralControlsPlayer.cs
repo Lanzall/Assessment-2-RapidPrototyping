@@ -32,7 +32,8 @@ public class GeneralControlsPlayer : MonoBehaviour
         isFrontStance = true;
         canAct = true;
         originalCamPos = CineCam.gameObject.transform.localPosition;
-        
+        currentHealth = maxHealth;
+
     }
 
     void Update()

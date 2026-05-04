@@ -162,6 +162,7 @@ MonoBehaviour:
   CineCam: {fileID: 603012265}
   opponent: {fileID: 998278471}
   winScreen: {fileID: 1402113169}
+  audioPlayer: {fileID: 27591512}
   player1DeathCam: {fileID: 1968064400}
   player2DeathCam: {fileID: 2008498411}
   maxHealth: 3
@@ -243,6 +244,7 @@ MonoBehaviour:
         m_CallState: 2
   canAct: 0
   isDead: 0
+  inCountdown: 0
 --- !u!114 &27591512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -269,6 +271,8 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 2293da20ec283d243aba6a49a2235185, type: 3}
   - name: Fall
     clip: {fileID: 8300000, guid: 864418f01f86cb144852010e14f26f6d, type: 3}
+  - name: Won
+    clip: {fileID: 8300000, guid: 0a559bfc4d821a145a0c27d7bc27f45b, type: 3}
 --- !u!82 &27591513
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2236,7 +2240,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 740089556}
-  - component: {fileID: 740089557}
   - component: {fileID: 740089558}
   - component: {fileID: 740089559}
   - component: {fileID: 740089561}
@@ -2263,28 +2266,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &740089557
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 740089555}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 2105930138121ef48b0b498f074d7146, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &740089558
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2977,6 +2958,7 @@ MonoBehaviour:
   CineCam: {fileID: 603012265}
   opponent: {fileID: 27591510}
   winScreen: {fileID: 1402113169}
+  audioPlayer: {fileID: 998278473}
   player1DeathCam: {fileID: 1968064400}
   player2DeathCam: {fileID: 2008498411}
   maxHealth: 3
@@ -3058,6 +3040,7 @@ MonoBehaviour:
         m_CallState: 2
   canAct: 0
   isDead: 0
+  inCountdown: 0
 --- !u!114 &998278473
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3084,6 +3067,8 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 2293da20ec283d243aba6a49a2235185, type: 3}
   - name: Fall
     clip: {fileID: 8300000, guid: 864418f01f86cb144852010e14f26f6d, type: 3}
+  - name: Won
+    clip: {fileID: 8300000, guid: 0a559bfc4d821a145a0c27d7bc27f45b, type: 3}
 --- !u!82 &998278474
 AudioSource:
   m_ObjectHideFlags: 0
@@ -5312,7 +5297,7 @@ MonoBehaviour:
     m_ActionName: 'Players/P2 Swing[/Keyboard/p]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyobard
-  m_DefaultActionMap: 26316f4a-69b2-4e2b-a00c-527c0c20ae09
+  m_DefaultActionMap: SwordFightingForIdiots
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!1 &1708220026

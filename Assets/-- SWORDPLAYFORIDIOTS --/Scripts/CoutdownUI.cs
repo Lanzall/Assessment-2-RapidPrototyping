@@ -19,8 +19,8 @@ public class CoutdownUI : MonoBehaviour
 
     public IEnumerator StartCountdown()
     {
-        Player1.canAct = false;
-        Player2.canAct = false;
+        Player1.inCountdown = true;
+        Player2.inCountdown = true;
 
         countdownObject.SetActive(true);
 
@@ -46,7 +46,7 @@ public class CoutdownUI : MonoBehaviour
 
         countdownObject.SetActive(false);
 
-        Player1.canAct = true;
-        Player2.canAct = true;
+        Player1.inCountdown = false;
+        Player2.inCountdown = false;
     }
 }

@@ -15,6 +15,7 @@ public class GeneralControlsPlayer : MonoBehaviour
     public CinemachineCamera CineCam;
     public GeneralControlsPlayer opponent;
     public TextMeshProUGUI winScreen;
+    public AudioPlayer audioPlayer;
 
     public CinemachineCamera player1DeathCam;
     public CinemachineCamera player2DeathCam;
@@ -34,6 +35,7 @@ public class GeneralControlsPlayer : MonoBehaviour
     private bool isFrontStance;
     public bool canAct;
     public bool isDead = false;
+    public bool inCountdown;
 
     private Vector3 originalCamPos;
     private Tweener camShakeTween;
@@ -44,6 +46,7 @@ public class GeneralControlsPlayer : MonoBehaviour
         canAct = false;
         originalCamPos = CineCam.gameObject.transform.localPosition;
         currentHealth = maxHealth;
+        inCountdown = true;
 
         CineCam.Priority = 10;   // Setting the main camera to have higher priority than the death cams at the start of the game, so it will be active
         player1DeathCam.Priority = 0;
@@ -62,8 +65,9 @@ public class GeneralControlsPlayer : MonoBehaviour
 
     public void Pivot(InputAction.CallbackContext context)
     {
-        if (canAct && context.performed)
+        if (context.performed)
         {
+            if (!canAct) return;
             animator.SetBool("isFrontStance", !animator.GetBool("isFrontStance"));
             isFrontStance = !isFrontStance;
         }
@@ -73,8 +77,9 @@ public class GeneralControlsPlayer : MonoBehaviour
 
     public void Stab(InputAction.CallbackContext context)   // STAB ANIMATION ACTION -- This only handles the animation triggering, the actual hit check occurs from the following trigger from the animation
     {
-        if (canAct && context.performed)
+        if (context.performed)
         {
+            if (!canAct) return;
             animator.SetTrigger("Stab");
 
         }
@@ -99,8 +104,9 @@ public class GeneralControlsPlayer : MonoBehaviour
 
     public void Swing(InputAction.CallbackContext context)
     {
-        if (canAct && context.performed)
+        if (context.performed)
         {
+            if (!canAct) return;
             animator.SetTrigger("Swing");
 
         }
@@ -131,6 +137,7 @@ public class GeneralControlsPlayer : MonoBehaviour
     {
         //When in Idle animation, resets canAct to true in case of damage during an attack animation, allowing the player to act again.
         if (opponent.isDead) return;
+        if (inCountdown) return;
         canAct = true;
 
     }
@@ -214,6 +221,7 @@ public class GeneralControlsPlayer : MonoBehaviour
         yield return new WaitForSeconds(4f);
         winScreen.gameObject.SetActive(true);
         winScreen.text = $"{(gameObject.name == "Player1" ? "Player 2" : "Player 1")} Wins!".ToUpper();
+        audioPlayer.PlayClip("Won");
         yield return null;
     }
 }

@@ -150,7 +150,9 @@ public class GeneralControlsPlayer : MonoBehaviour
 
     public void Die()
     {
-        //This is where the character would die
+        canAct = false;
+        opponent.canAct = false;
+
         onDeath.Invoke();   // Invoking the Unity Event when the player dies, for SFX, VFX and ragdoll
         Debug.Log("Player has died!");
         return;

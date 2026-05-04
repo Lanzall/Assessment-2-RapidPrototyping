@@ -15,7 +15,7 @@ EditorBuildSettings:
     path: Assets/--- Scenes ---/6Bullets/6Bullets.unity
     guid: 5471b29876605db478488d608079c44c
   - enabled: 1
-    path: Assets/--- Scenes ---/Swordplay for Idiots/SFI Title.unity
+    path: Assets/--- Scenes ---/Swordplay for Idiots/SFITitle.unity
     guid: ed677da077d53b6488368795906fe6f1
   - enabled: 1
     path: Assets/--- Scenes ---/Swordplay for Idiots/SwordplayForIdiots.unity

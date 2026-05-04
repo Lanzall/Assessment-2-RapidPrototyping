@@ -29,6 +29,9 @@ public class RagdollController : MonoBehaviour
             col.enabled = enabled;
         }
 
+        foreach (var rb in ragdollBodies)
+            rb.AddForce(transform.forward * -10f, ForceMode.Impulse);
+
         mainBody.isKinematic = enabled;
         mainCollider.enabled = !enabled;
     }

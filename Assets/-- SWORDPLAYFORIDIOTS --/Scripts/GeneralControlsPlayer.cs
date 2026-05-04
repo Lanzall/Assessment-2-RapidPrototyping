@@ -4,6 +4,8 @@ using DG.Tweening;
 using Unity.Cinemachine;
 using Unity.VisualScripting;
 using UnityEngine.Events;
+using System.Collections;
+using UnityEngine.UI;
 
 public class GeneralControlsPlayer : MonoBehaviour
 {
@@ -12,9 +14,15 @@ public class GeneralControlsPlayer : MonoBehaviour
     public CinemachineCamera CineCam;
     public GeneralControlsPlayer opponent;
 
+    public CinemachineCamera player1DeathCam;
+    public CinemachineCamera player2DeathCam;
+
     [Header("Stats")]
     public int maxHealth = 3;
     public int currentHealth;
+    public Image[] heartSprites;
+    public Sprite fullHeart;
+    public Sprite emptyHeart;
 
     [Header("Events")]      // Using this for triggering sound effects, vfx and ragdoll
     public UnityEvent onHit;
@@ -22,7 +30,8 @@ public class GeneralControlsPlayer : MonoBehaviour
     public UnityEvent onDeath;
 
     private bool isFrontStance;
-    private bool canAct;
+    public bool canAct;
+    public bool isDead = false;
 
     private Vector3 originalCamPos;
     private Tweener camShakeTween;
@@ -34,11 +43,18 @@ public class GeneralControlsPlayer : MonoBehaviour
         originalCamPos = CineCam.gameObject.transform.localPosition;
         currentHealth = maxHealth;
 
+        CineCam.Priority = 10;   // Setting the main camera to have higher priority than the death cams at the start of the game, so it will be active
+        player1DeathCam.Priority = 0;
+        player2DeathCam.Priority = 0;
+
     }
 
     void Update()
     {
-        //Debug.Log(canAct);
+        if (opponent.isDead)
+        {
+            canAct = false;
+        }
     }
 
     public void Pivot(InputAction.CallbackContext context)
@@ -111,7 +127,9 @@ public class GeneralControlsPlayer : MonoBehaviour
     public void RefreshOnIdle()
     {
         //When in Idle animation, resets canAct to true in case of damage during an attack animation, allowing the player to act again.
+        if (opponent.isDead) return;
         canAct = true;
+
     }
 
 
@@ -127,6 +145,8 @@ public class GeneralControlsPlayer : MonoBehaviour
         Debug.Log("Damage taken!");
         camShakeTween?.Kill();
         camShakeTween = CineCam.gameObject.transform.DOShakePosition(.3f, 2f, 10, 90, false, true).OnComplete(() => ResetCamPos());
+
+        UpdateHearts();
     }
 
     public void ResetCamPos()
@@ -148,13 +168,46 @@ public class GeneralControlsPlayer : MonoBehaviour
         }
     }
 
+    void UpdateHearts()
+    {
+        for (int i = 0; i < heartSprites.Length; i++)
+        {
+            heartSprites[i].sprite = i < currentHealth ? fullHeart : emptyHeart;
+        }
+    }
+
     public void Die()
     {
+        isDead = true;
         canAct = false;
         opponent.canAct = false;
+
+        // Switch cameras to dead player
+        if (gameObject.name == "Player1")
+        {
+            player1DeathCam.Priority = 10;
+            CineCam.Priority = 0;
+            player2DeathCam.Priority = 0;
+        }
+        else if (gameObject.name == "Player2")
+        {
+            player2DeathCam.Priority = 10;
+            CineCam.Priority = 0;
+            player1DeathCam.Priority = 0;
+        }
+
+        StartCoroutine(DeathSlowdown());   // Start the slowdown effect when the player dies
 
         onDeath.Invoke();   // Invoking the Unity Event when the player dies, for SFX, VFX and ragdoll
         Debug.Log("Player has died!");
         return;
+    }
+
+    public IEnumerator DeathSlowdown()
+    {
+        DOTween.To(() => Time.timeScale, x => Time.timeScale = x, 0.3f, 0f);
+            yield return new WaitForSecondsRealtime(1f);
+            Time.timeScale = 1f;
+        yield return null;
     }
 }

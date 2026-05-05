@@ -215,6 +215,98 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""TreeGame"",
+            ""id"": ""9bd9c751-a589-4307-b259-0d637a1efb10"",
+            ""actions"": [
+                {
+                    ""name"": ""Move"",
+                    ""type"": ""Value"",
+                    ""id"": ""62ab4f7d-f3fe-4b7a-b665-4490a8aa2e63"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""b6929bf4-36bd-497b-8559-f593b538ce0e"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""40a6e0a8-595e-49e8-8d04-dc406be98dd2"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""bee2f628-5d51-4f6c-9265-db6c41faaeb0"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyobard"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""e4a8052d-479e-4f55-9794-93e7b8f5f29b"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""bf68c99e-9af3-4f44-97d0-223a57edaeb3"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyobard"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""a96d8fe5-54f7-49bb-8c89-57c871021bed"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyobard"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""151864de-b2a8-4fac-b7fe-70b0f9b75bb7"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyobard"",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -239,11 +331,16 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_SwordFightingForIdiots_P2Pivot = m_SwordFightingForIdiots.FindAction("P2 Pivot", throwIfNotFound: true);
         m_SwordFightingForIdiots_P2Stab = m_SwordFightingForIdiots.FindAction("P2 Stab", throwIfNotFound: true);
         m_SwordFightingForIdiots_P2Swing = m_SwordFightingForIdiots.FindAction("P2 Swing", throwIfNotFound: true);
+        // TreeGame
+        m_TreeGame = asset.FindActionMap("TreeGame", throwIfNotFound: true);
+        m_TreeGame_Move = m_TreeGame.FindAction("Move", throwIfNotFound: true);
+        m_TreeGame_Jump = m_TreeGame.FindAction("Jump", throwIfNotFound: true);
     }
 
     ~@PlayerControls()
     {
         UnityEngine.Debug.Assert(!m_SwordFightingForIdiots.enabled, "This will cause a leak and performance issues, PlayerControls.SwordFightingForIdiots.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_TreeGame.enabled, "This will cause a leak and performance issues, PlayerControls.TreeGame.Disable() has not been called.");
     }
 
     /// <summary>
@@ -466,6 +563,113 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     /// Provides a new <see cref="SwordFightingForIdiotsActions" /> instance referencing this action map.
     /// </summary>
     public SwordFightingForIdiotsActions @SwordFightingForIdiots => new SwordFightingForIdiotsActions(this);
+
+    // TreeGame
+    private readonly InputActionMap m_TreeGame;
+    private List<ITreeGameActions> m_TreeGameActionsCallbackInterfaces = new List<ITreeGameActions>();
+    private readonly InputAction m_TreeGame_Move;
+    private readonly InputAction m_TreeGame_Jump;
+    /// <summary>
+    /// Provides access to input actions defined in input action map "TreeGame".
+    /// </summary>
+    public struct TreeGameActions
+    {
+        private @PlayerControls m_Wrapper;
+
+        /// <summary>
+        /// Construct a new instance of the input action map wrapper class.
+        /// </summary>
+        public TreeGameActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action "TreeGame/Move".
+        /// </summary>
+        public InputAction @Move => m_Wrapper.m_TreeGame_Move;
+        /// <summary>
+        /// Provides access to the underlying input action "TreeGame/Jump".
+        /// </summary>
+        public InputAction @Jump => m_Wrapper.m_TreeGame_Jump;
+        /// <summary>
+        /// Provides access to the underlying input action map instance.
+        /// </summary>
+        public InputActionMap Get() { return m_Wrapper.m_TreeGame; }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+        public void Enable() { Get().Enable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+        public void Disable() { Get().Disable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+        public bool enabled => Get().enabled;
+        /// <summary>
+        /// Implicitly converts an <see ref="TreeGameActions" /> to an <see ref="InputActionMap" /> instance.
+        /// </summary>
+        public static implicit operator InputActionMap(TreeGameActions set) { return set.Get(); }
+        /// <summary>
+        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <param name="instance">Callback instance.</param>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+        /// </remarks>
+        /// <seealso cref="TreeGameActions" />
+        public void AddCallbacks(ITreeGameActions instance)
+        {
+            if (instance == null || m_Wrapper.m_TreeGameActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_TreeGameActionsCallbackInterfaces.Add(instance);
+            @Move.started += instance.OnMove;
+            @Move.performed += instance.OnMove;
+            @Move.canceled += instance.OnMove;
+            @Jump.started += instance.OnJump;
+            @Jump.performed += instance.OnJump;
+            @Jump.canceled += instance.OnJump;
+        }
+
+        /// <summary>
+        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+        /// </remarks>
+        /// <seealso cref="TreeGameActions" />
+        private void UnregisterCallbacks(ITreeGameActions instance)
+        {
+            @Move.started -= instance.OnMove;
+            @Move.performed -= instance.OnMove;
+            @Move.canceled -= instance.OnMove;
+            @Jump.started -= instance.OnJump;
+            @Jump.performed -= instance.OnJump;
+            @Jump.canceled -= instance.OnJump;
+        }
+
+        /// <summary>
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="TreeGameActions.UnregisterCallbacks(ITreeGameActions)" />.
+        /// </summary>
+        /// <seealso cref="TreeGameActions.UnregisterCallbacks(ITreeGameActions)" />
+        public void RemoveCallbacks(ITreeGameActions instance)
+        {
+            if (m_Wrapper.m_TreeGameActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        /// <summary>
+        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+        /// </remarks>
+        /// <seealso cref="TreeGameActions.AddCallbacks(ITreeGameActions)" />
+        /// <seealso cref="TreeGameActions.RemoveCallbacks(ITreeGameActions)" />
+        /// <seealso cref="TreeGameActions.UnregisterCallbacks(ITreeGameActions)" />
+        public void SetCallbacks(ITreeGameActions instance)
+        {
+            foreach (var item in m_Wrapper.m_TreeGameActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_TreeGameActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    /// <summary>
+    /// Provides a new <see cref="TreeGameActions" /> instance referencing this action map.
+    /// </summary>
+    public TreeGameActions @TreeGame => new TreeGameActions(this);
     private int m_KeyobardSchemeIndex = -1;
     /// <summary>
     /// Provides access to the input control scheme.
@@ -528,5 +732,27 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnP2Swing(InputAction.CallbackContext context);
+    }
+    /// <summary>
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "TreeGame" which allows adding and removing callbacks.
+    /// </summary>
+    /// <seealso cref="TreeGameActions.AddCallbacks(ITreeGameActions)" />
+    /// <seealso cref="TreeGameActions.RemoveCallbacks(ITreeGameActions)" />
+    public interface ITreeGameActions
+    {
+        /// <summary>
+        /// Method invoked when associated input action "Move" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnMove(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Jump" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnJump(InputAction.CallbackContext context);
     }
 }
